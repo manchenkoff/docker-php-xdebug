@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  php:
+    image: manchenkoff/apache-php-xdebug
+    container_name: php
+    ports:
+      - 80:80
+      - 443:443
+    build:
+      context: src
+    volumes:
+      - ./src/app:/var/www/app
+    environment:
+      PHP_IDE_CONFIG: serverName=localhost
