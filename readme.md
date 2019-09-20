@@ -15,6 +15,7 @@ This repository contains Docker image sources with following apps:
 ## Environment
 
 - CLI XDebug support: `PHP_IDE_CONFIG: serverName=localhost`
+- XDebug hostname: `XDEBUG_CONFIG: remote_host=host.docker.internal` (if necessary)
 - Application hostname: `APP_NAME: dev.local`
 
 ## XDebug configuration
