@@ -36,9 +36,9 @@ RUN apk --update add --virtual build-dependencies build-base openssl-dev autocon
 RUN apk add --no-cache supervisor
 
 # Web server configuration
-COPY apache/httpd.conf /etc/apache2/httpd.conf
-COPY apache/ssl.conf /etc/apache2/conf.d/ssl.conf
-COPY apache/host.conf /etc/apache2/conf.d/host.conf
+COPY ./apache/httpd.conf /etc/apache2/httpd.conf
+COPY ./apache/ssl.conf /etc/apache2/conf.d/ssl.conf
+COPY ./apache/host.conf /etc/apache2/conf.d/host.conf
 
 # Replace server name in config files
 RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/httpd.conf
@@ -46,25 +46,25 @@ RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/ssl.conf
 RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/host.conf
 
 # PHP Configuration
-COPY php/php.ini /etc/php7/php.ini
-COPY php/xdebug.ini /etc/php7/conf.d/xdebug.ini
+COPY ./php/php.ini /etc/php7/php.ini
+COPY ./php/xdebug.ini /etc/php7/conf.d/xdebug.ini
 
 # Supervisor processes
 RUN mkdir /var/log/workers -p
-COPY procs  /etc/supervisor.d
+COPY ./procs  /etc/supervisor.d
 
 # Symlinks to see Apache logs
 RUN ln -s /dev/stdout /var/www/logs/access.log
 RUN ln -s /dev/stderr /var/www/logs/error.log
 
 # Container initialization script
-COPY bin/init.sh /usr/local/bin/init
+COPY ./bin/init.sh /usr/local/bin/init
 
 # Open network ports
 EXPOSE 80 443
 
 # Copy default app sources
-COPY app /var/www/app
+COPY ./app /var/www/app
 
 VOLUME ["/var/www/app", "/etc/supervisor.d"]
 WORKDIR /var/www/app
