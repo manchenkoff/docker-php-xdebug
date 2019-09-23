@@ -23,3 +23,20 @@ This repository contains Docker image sources with following apps:
 - IDE Key: `PHPSTORM`
 - Port: `9000`
 - *Requires path mapping
+
+## Example usage with `docker-compose`
+
+```
+version: "3.7"
+services:
+  php:
+    image: manchenkoff/apache-php-xdebug
+    container_name: php
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./src/app:/var/www/app:cached
+    environment:
+      PHP_IDE_CONFIG: serverName=localhost
+```
