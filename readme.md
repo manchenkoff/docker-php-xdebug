@@ -32,7 +32,6 @@ version: "3.7"
 services:
   php:
     image: manchenkoff/apache-php-xdebug
-    container_name: php
     ports:
       - 80:80
       - 443:443
