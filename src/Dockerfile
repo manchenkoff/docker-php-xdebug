@@ -38,12 +38,11 @@ RUN apk add --no-cache supervisor
 # Web server configuration
 COPY ./apache/httpd.conf /etc/apache2/httpd.conf
 COPY ./apache/ssl.conf /etc/apache2/conf.d/ssl.conf
-COPY ./apache/host.conf /etc/apache2/conf.d/host.conf
+COPY ./apache/hosts.conf /etc/apache2/conf.d/hosts.conf
 
 # Replace server name in config files
 RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/httpd.conf
-RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/ssl.conf
-RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/host.conf
+RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/hosts.conf
 
 # PHP Configuration
 COPY ./php/php.ini /etc/php7/php.ini
