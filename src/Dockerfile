@@ -20,8 +20,8 @@ RUN apk add --no-cache php7 composer php7-pear php7-dev php7-apache2 \
     php7-mbstring php7-tokenizer php7-xml php7-simplexml \
     php7-zip php7-opcache php7-iconv php7-intl php7-pcntl \
     php7-json php7-gd php7-ctype php7-pecl-oauth php7-pecl-xdebug \
-    php7-pecl-redis php7-pecl-apcu php7-pecl-imagick \
-    php7-pecl-memcached php7-ftp php7-imap \
+    php7-pecl-redis php7-pecl-apcu php7-pecl-imagick php7-dom \
+    php7-pecl-memcached php7-ftp php7-imap php7-xmlwriter \
     php7-exif php7-sqlite3 php7-curl
 
 # PHP 7 MongoDB support
