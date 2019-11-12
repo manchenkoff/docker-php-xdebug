@@ -22,7 +22,7 @@ RUN apk add --no-cache php7 composer php7-pear php7-dev php7-apache2 \
     php7-json php7-gd php7-ctype php7-pecl-oauth php7-pecl-xdebug \
     php7-pecl-redis php7-pecl-apcu php7-pecl-imagick php7-dom \
     php7-pecl-memcached php7-ftp php7-imap php7-xmlwriter \
-    php7-exif php7-sqlite3 php7-curl
+    php7-exif php7-sqlite3 php7-curl php7-bcmath
 
 # PHP 7 MongoDB support
 RUN apk --update add --virtual build-dependencies build-base openssl-dev autoconf && \
