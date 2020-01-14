@@ -2,16 +2,20 @@
 
 # /usr/local/bin/init
 
-cd /root
+# Replace env params in config files
+sed -i "s/{HOST_NAME}/${HOST_NAME}/g" /etc/apache2/httpd.conf
+sed -i "s/{HOST_NAME}/${HOST_NAME}/g" /etc/apache2/conf.d/hosts.conf
+sed -i "s/{XDEBUG_REMOTE_HOST}/${XDEBUG_REMOTE_HOST}/g" /etc/php7/conf.d/xdebug.ini
 
-# Start supervisor process and stop workers by default
-supervisord -c /etc/supervisord.conf
-supervisorctl stop all @> /dev/null
+# Set up xdebug
+if [ ${XDEBUG_ENABLED} = true ] ; then
+  sed -i "s/;zend_extension/zend_extension/g" /etc/php7/conf.d/xdebug.ini
+fi
 
 # Start container with Apache web server as a main process
 current_date=$(date +'%d.%m.%Y %r')
 
-printf "${current_date} - Container: Apache 2 / PHP 7 / Composer / XDebug / Supervisor \n\n"
-printf "Server: ${APP_NAME} \n\n"
+printf "${current_date} - Container: Apache 2 / PHP 7 / Composer / XDebug \n\n"
+printf "Server: ${HOST_NAME} \n\n"
 
 exec /usr/sbin/httpd -D FOREGROUND

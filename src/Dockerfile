@@ -4,7 +4,11 @@ FROM alpine:edge
 RUN apk update && apk upgrade
 
 # Set application name
-ENV APP_NAME=dev.local
+ENV HOST_NAME=localhost
+
+# Set xdebug params
+ENV XDEBUG_ENABLED=false
+ENV XDEBUG_REMOTE_HOST=host.docker.internal
 
 # Set custom time zone info
 ENV TZ=Europe/Moscow
@@ -32,25 +36,14 @@ RUN apk --update add --virtual build-dependencies build-base openssl-dev autocon
     apk del build-dependencies build-base openssl-dev autoconf && \
     rm -rf /var/cache/apk/*
 
-# Supervisor manager install
-RUN apk add --no-cache supervisor
-
 # Web server configuration
 COPY ./apache/httpd.conf /etc/apache2/httpd.conf
 COPY ./apache/ssl.conf /etc/apache2/conf.d/ssl.conf
 COPY ./apache/hosts.conf /etc/apache2/conf.d/hosts.conf
 
-# Replace server name in config files
-RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/httpd.conf
-RUN sed -i 's/{APP_NAME}/${APP_NAME}/g' /etc/apache2/conf.d/hosts.conf
-
 # PHP Configuration
 COPY ./php/php.ini /etc/php7/php.ini
 COPY ./php/xdebug.ini /etc/php7/conf.d/xdebug.ini
-
-# Supervisor processes
-RUN mkdir /var/log/workers -p
-COPY ./procs  /etc/supervisor.d
 
 # Symlinks to see Apache logs
 RUN ln -s /dev/stdout /var/www/logs/access.log
