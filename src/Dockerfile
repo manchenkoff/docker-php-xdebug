@@ -9,6 +9,7 @@ ENV HOST_NAME=localhost
 # Set xdebug params
 ENV XDEBUG_ENABLED=false
 ENV XDEBUG_REMOTE_HOST=host.docker.internal
+ENV PHP_IDE_CONFIG="serverName=${HOST_NAME}"
 
 # Set custom time zone info
 ENV TZ=Europe/Moscow
