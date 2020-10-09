@@ -3,7 +3,7 @@
 This repository contains Docker image sources with following apps:
 
 - Apache 2 (SSL supports)
-- PHP 7 (with a lot of extensions: `pdo`, `intl`, `apc`, `mongo`, etc)
+- PHP 7 (with a lot of extensions: `pdo`, `intl`, `apc`, etc)
 - Composer
 
 ## Volumes
@@ -31,10 +31,10 @@ All params stay in `.env` file
 ## Example usage with `docker-compose`
 
 ```
-version: "3.7"
+version: 3.7
 services:
   php:
-    image: manchenkoff/apache-php-xdebug
+    image: manchenkoff/php-xdebug
     container_name: app
     ports:
       - 80:80

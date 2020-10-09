@@ -15,7 +15,7 @@ fi
 # Start container with Apache web server as a main process
 current_date=$(date +'%d.%m.%Y %r')
 
-printf "${current_date} - Container: Apache 2 / PHP 7 / Composer / XDebug \n\n"
+printf "${current_date} - Container: Apache 2 / PHP 7.4 / XDebug \n\n"
 printf "Server: ${HOST_NAME} \n\n"
 
 exec /usr/sbin/httpd -D FOREGROUND

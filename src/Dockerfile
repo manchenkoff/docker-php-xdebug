@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.12
 
 # Upgrade default packages
 RUN apk update && apk upgrade
@@ -19,8 +19,9 @@ RUN apk add --no-cache tzdata
 RUN apk add --no-cache apache2 apache2-ssl
 RUN rm -R /var/www/localhost
 
-# Install PHP 7 / Composer
-RUN apk add --no-cache php7 composer php7-pear php7-dev php7-apache2 \
+# Install PHP 7.4
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    php7 php7-pear php7-dev php7-apache2 \
     php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-pdo_sqlite \
     php7-mbstring php7-tokenizer php7-xml php7-simplexml \
     php7-zip php7-opcache php7-iconv php7-intl php7-pcntl \
@@ -28,14 +29,6 @@ RUN apk add --no-cache php7 composer php7-pear php7-dev php7-apache2 \
     php7-pecl-redis php7-pecl-apcu php7-pecl-imagick php7-dom \
     php7-pecl-memcached php7-ftp php7-imap php7-xmlwriter \
     php7-exif php7-sqlite3 php7-curl php7-bcmath
-
-# PHP 7 MongoDB support
-RUN apk --update add --virtual build-dependencies build-base openssl-dev autoconf && \
-    pecl install mongodb && \
-    pecl clear-cache && \
-    echo "extension=mongodb.so" > /etc/php7/conf.d/mongodb.ini && \
-    apk del build-dependencies build-base openssl-dev autoconf && \
-    rm -rf /var/cache/apk/*
 
 # Web server configuration
 COPY ./apache/httpd.conf /etc/apache2/httpd.conf
@@ -59,7 +52,7 @@ EXPOSE 80 443
 # Copy default app sources
 COPY ./app /var/www/app
 
-VOLUME ["/var/www/app", "/etc/supervisor.d"]
+VOLUME ["/var/www/app"]
 WORKDIR /var/www/app
 
 ENTRYPOINT ["init"]
